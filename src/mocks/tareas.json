@@ -10,7 +10,8 @@
           "edad": 30,
           "habilidades": ["JavaScript", "Node.js", "Angular"]
         }
-      ]
+      ],
+      "estado":"Pendiente"
     },
     {
       "id": 2,
@@ -23,7 +24,8 @@
           "edad": 25,
           "habilidades": ["Python", "Django", "SQL"]
         }
-      ]
+      ],
+      "estado":"Pendiente"
     },
     {
       "id": 3,
@@ -36,7 +38,8 @@
           "edad": 35,
           "habilidades": ["Java", "Spring Boot", "Docker"]
         }
-      ]
+      ],
+      "estado":"Completada"
     },
     {
       "id": 4,
@@ -49,7 +52,8 @@
           "edad": 28,
           "habilidades": ["HTML", "CSS", "Tailwind CSS"]
         }
-      ]
+      ],
+      "estado":"Completada"
     },
     {
       "id": 5,
@@ -68,7 +72,8 @@
           "edad": 28,
           "habilidades": ["HTML", "CSS", "Tailwind CSS"]
         }
-      ]
+      ],
+      "estado":"Pendiente"
     },
     {
       "id": 6,
@@ -81,7 +86,8 @@
           "edad": 25,
           "habilidades": ["Python", "Django", "SQL"]
         }
-      ]
+      ],
+      "estado":"Completada"
     },
     {
       "id": 7,
@@ -94,7 +100,8 @@
           "edad": 35,
           "habilidades": ["Java", "Spring Boot", "Docker"]
         }
-      ]
+      ],
+      "estado":"Pendiente"
     },
     {
       "id": 8,
@@ -113,7 +120,8 @@
           "edad": 35,
           "habilidades": ["Java", "Spring Boot", "Docker"]
         }
-      ]
+      ],
+      "estado":"Pendiente"
     },
     {
       "id": 9,
@@ -132,7 +140,8 @@
           "edad": 28,
           "habilidades": ["HTML", "CSS", "Tailwind CSS"]
         }
-      ]
+      ],
+      "estado":"Pendiente"
     },
     {
       "id": 10,
@@ -151,7 +160,8 @@
           "edad": 28,
           "habilidades": ["HTML", "CSS", "Tailwind CSS"]
         }
-      ]
+      ],
+      "estado":"Completada"
     }
   ]
   
