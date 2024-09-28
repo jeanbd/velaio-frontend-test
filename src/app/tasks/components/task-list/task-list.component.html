@@ -1,26 +1,57 @@
-<section class="flex flex-col px-5 pt-3 gap-3">
-    <!-- <div *ngFor="let task of dataTasks" class="flex flex-row bg-blue-300 rounded-xl p-2 justify-between">
-        <label class="truncate">
-            {{task.detalle}} 
+<section class="flex flex-col px-5 pt-3 gap-3 py-3">
+    <button class="fixed bottom-5 right-5 w-32 bg-blue-300 rounded-xl mt-auto text-center z-20">
+
+        <label class="relative top-0">
+            Nueva tarea
+
+            <mat-icon>add_task</mat-icon>
         </label>
+    </button>
 
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 justify-end">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-          </svg>
-          
-    </div> -->
+    <div class="flex flex-row justify-between">
+        <div class="flex flex-row">
+            <!-- <button class="bg-green-200 rounded-xl p-1" (click)="accordion.openAll()">Abrir todos</button>
+            <button class="bg-slate-300 rounded-xl p-1" (click)="accordion.closeAll()">Cerrar todos</button> -->
 
-    <!-- <div class="example-action-buttons">
-        <button mat-button (click)="accordion.openAll()">Expand All</button>
-        <button mat-button (click)="accordion.closeAll()">Collapse All</button>
-    </div> -->
-    <mat-accordion *ngFor="let task of dataTasks" class="example-headers-align" multi>
-        <mat-expansion-panel>
+            <button class="rounded-xl p-1" 
+            [ngClass]="{'bg-green-200':isCollapsedAll==true,'bg-slate-300':isCollapsedAll==false}" 
+            (click)="collapseAll()">
+                <mat-icon>unfold_more</mat-icon>
+            </button>
+        </div>
+
+        <div class="flex flex-row gap-2">
+
+            <button class="rounded-xl p-1"
+                [ngClass]="{'bg-green-200':pendingActivated==false && completeActivated==false,
+                'bg-slate-300':completeActivated==true || pendingActivated==true}"
+                (click)="cleanFilter()">
+                <mat-icon>filter_list_off</mat-icon>
+            </button>
+
+            <button class="rounded-xl p-1"
+                [ngClass]="{'bg-green-200':completeActivated==true,'bg-slate-300':completeActivated==false}"
+                (click)="completeFilter()">
+                <mat-icon>check_circle</mat-icon>
+            </button>
+
+            <button class="rounded-xl p-1"
+                [ngClass]="{'bg-green-200':pendingActivated==true,'bg-slate-300':pendingActivated==false}"
+                (click)="pendingFilter()">
+                <mat-icon>pending</mat-icon>
+            </button>
+
+        </div>
+
+
+    </div>
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel *ngFor="let task of dataTasks">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{task.detalle}}
                 </mat-panel-title>
-                
+
             </mat-expansion-panel-header>
 
             <div class="flex flex-row justify-between">
@@ -36,18 +67,18 @@
                         <p class="text-red-500">Fecha limite</p>
                         <label class="text-red-500">{{task.fechaLimite}}</label>
                     </div>
-    
+
                     <!-- <div class="flex flex-col self-end text-right">
                         <label class="text-red-500">{{task.estado}}</label>
                     </div> -->
                 </div>
-                
-                
+
+
 
 
             </div>
 
-            
+
         </mat-expansion-panel>
     </mat-accordion>
 
