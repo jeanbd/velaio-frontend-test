@@ -5,6 +5,6 @@ export interface Task{
     detail:string;
     limitDate:string;
     persons:Persona[];
-    status:string;
+    status:boolean;
 }
 

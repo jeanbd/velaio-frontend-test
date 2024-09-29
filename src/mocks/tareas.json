@@ -11,7 +11,7 @@
           "skills": ["JavaScript", "Node.js", "Angular"]
         }
       ],
-      "status":"Pendiente"
+      "status":false
     },
     {
       "id": 2,
@@ -25,7 +25,7 @@
           "skills": ["Python", "Django", "SQL"]
         }
       ],
-      "status":"Pendiente"
+      "status":false
     },
     {
       "id": 3,
@@ -39,7 +39,7 @@
           "skills": ["Java", "Spring Boot", "Docker"]
         }
       ],
-      "status":"Completada"
+      "status":true
     },
     {
       "id": 4,
@@ -53,7 +53,7 @@
           "skills": ["HTML", "CSS", "Tailwind CSS"]
         }
       ],
-      "status":"Completada"
+      "status":true
     },
     {
       "id": 5,
@@ -73,7 +73,7 @@
           "skills": ["HTML", "CSS", "Tailwind CSS"]
         }
       ],
-      "status":"Pendiente"
+      "status":false
     },
     {
       "id": 6,
@@ -87,7 +87,7 @@
           "skills": ["Python", "Django", "SQL"]
         }
       ],
-      "status":"Completada"
+      "status":true
     },
     {
       "id": 7,
@@ -101,7 +101,7 @@
           "skills": ["Java", "Spring Boot", "Docker"]
         }
       ],
-      "status":"Pendiente"
+      "status":false
     },
     {
       "id": 8,
@@ -121,7 +121,7 @@
           "skills": ["Java", "Spring Boot", "Docker"]
         }
       ],
-      "status":"Pendiente"
+      "status":false
     },
     {
       "id": 9,
@@ -141,7 +141,7 @@
           "skills": ["HTML", "CSS", "Tailwind CSS"]
         }
       ],
-      "status":"Pendiente"
+      "status":false
     },
     {
       "id": 10,
@@ -161,7 +161,7 @@
           "skills": ["HTML", "CSS", "Tailwind CSS"]
         }
       ],
-      "status":"Completada"
+      "status":true
     }
   ]
   

@@ -56,7 +56,7 @@ export class TaskListComponent implements OnInit {
 
   pendingFilter() {
     this.dataTasks = tasks;
-    this.dataTasks = this.dataTasks.filter(e => e.status == "Pendiente");
+    this.dataTasks = this.dataTasks.filter(e => e.status == false);
     this.isCollapsedAll=false
     this.accordion.closeAll()
     this.pendingActivated = true;
@@ -66,7 +66,7 @@ export class TaskListComponent implements OnInit {
 
   completeFilter() {
     this.dataTasks = tasks;
-    this.dataTasks = this.dataTasks.filter(e => e.status == "Completada");
+    this.dataTasks = this.dataTasks.filter(e => e.status == true);
     this.isCollapsedAll=false
     this.accordion.closeAll()
     this.pendingActivated = false;
@@ -90,6 +90,14 @@ export class TaskListComponent implements OnInit {
 
   openCreaeTask(){
     this.dialog.open(CreateTaskComponent);
+  }
+
+  openEditTask(task:Task){
+    this.dialog.open(CreateTaskComponent,{
+      data:{
+        isEditing:true,
+        task}
+    });
   }
 
 }

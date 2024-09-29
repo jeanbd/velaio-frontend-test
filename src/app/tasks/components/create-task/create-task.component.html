@@ -36,15 +36,20 @@
                             formControlName="name">
                     </div>
 
-                    <div>
+                    <div class="mb-4">
                         <p for="name-person">Edad</p>
                         <input class="border border-slate-500 rounded-md" id="limit-date" type="text"
                             formControlName="age">
                     </div>
 
+                    <button mat-raised-button color="warn" type="button" (click)="removePerson(personIndex)">
+                        Remove Person
+                      </button>
+
                     <hr>
 
-                    <h3>Habilidades</h3>
+                    <div class="mt-4">
+                        <h3>Habilidades</h3>
 
                     <button mat-raised-button color="accent" type="button" (click)="addSkill(personIndex)">
                         <mat-icon>add</mat-icon> Add Skill
@@ -59,15 +64,31 @@
                             </button>
                         </div>
                     </div>
+                    </div>
+                    
 
                 </div>
 
                 
             </div>
 
+            <div class="flex flex-row justify-between">
+                <!-- <label for="pending-status">Pendiente</label>
+                <input id="pending-status" type="checkbox" formControlName="status">
+
+                <label for="complete-status">Completa</label>
+                <input id="complete-status" type="checkbox" formControlName="status"> -->
+
+                <label for="">Estado</label>
+                <mat-slide-toggle formControlName="status" (change)="statusToggle()">
+                    {{taskForm.controls.status.value==true?'Completada':'Pendiente'}}
+                </mat-slide-toggle>
+            </div>
+
 
             <!-- <button mat-button color="primary" class="" >submit here</button> -->
-            <button mat-raised-button color="primary">Crear</button>
+            <button *ngIf="data==null"  mat-raised-button color="primary">Crear</button>
+            <button *ngIf="data!=null" mat-raised-button color="primary">Aceptar</button>
         </form>
 
 
