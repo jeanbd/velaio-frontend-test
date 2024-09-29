@@ -1,0 +1,75 @@
+<section class="p-5">
+
+    <h1 mat-dialog-title>Crear nueva tarea</h1>
+    <hr>
+
+    <div mat-dialog-content class="flex flex-col">
+
+        <form autocomplete="off" [formGroup]="taskForm" (ngSubmit)="onSaveForm()">
+            <div>
+                <p for="detail">Detalle de la tarea</p>
+                <input class="border border-slate-500 rounded-md" id="detail" type="text" formControlName="detail">
+            </div>
+
+            <div>
+                <p for="limit-date">Fecha limite</p>
+                <input class="border border-slate-500 rounded-md" id="limit-date" type="text"
+                    formControlName="limitDate">
+            </div>
+
+            <hr>
+
+            <div class="flex flex-row items-center">
+                <label>Personas asociadas</label>
+                <button mat-raised-button color="accent" type="button" (click)="addPerson()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            
+
+            <div class="mb-6" formArrayName="persons">
+
+                <div *ngFor="let person of persons.controls; let personIndex = index" [formGroupName]="personIndex">
+                    <div>
+                        <p for="name-person">Nombre completo</p>
+                        <input class="border border-slate-500 rounded-md" id="limit-date" type="text"
+                            formControlName="name">
+                    </div>
+
+                    <div>
+                        <p for="name-person">Edad</p>
+                        <input class="border border-slate-500 rounded-md" id="limit-date" type="text"
+                            formControlName="age">
+                    </div>
+
+                    <hr>
+
+                    <h3>Habilidades</h3>
+
+                    <button mat-raised-button color="accent" type="button" (click)="addSkill(personIndex)">
+                        <mat-icon>add</mat-icon> Add Skill
+                    </button>
+
+                    <div formArrayName="skills">
+                        <div *ngFor="let skill of getSkills(personIndex).controls; let skillIndex = index">
+                            <input class="border border-slate-500 rounded-xl" placeholder="Añade una habilidad"
+                                type="text" [formControlName]="skillIndex">
+                            <button class="text-center" (click)="removeSkill(personIndex, skillIndex)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                
+            </div>
+
+
+            <!-- <button mat-button color="primary" class="" >submit here</button> -->
+            <button mat-raised-button color="primary">Crear</button>
+        </form>
+
+
+    </div>
+</section>

@@ -1,9 +1,7 @@
 <section class="flex flex-col px-5 pt-3 gap-3 py-3">
-    <button class="fixed bottom-5 right-5 w-32 bg-blue-300 rounded-xl mt-auto text-center z-20">
-
+    <button class="fixed bottom-5 right-5 w-32 bg-blue-300 rounded-xl mt-auto text-center z-20" (click)="openCreaeTask()">
         <label class="relative top-0">
             Nueva tarea
-
             <mat-icon>add_task</mat-icon>
         </label>
     </button>
@@ -49,39 +47,30 @@
         <mat-expansion-panel *ngFor="let task of dataTasks">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{task.detalle}}
+                    {{task.detail}}
                 </mat-panel-title>
 
             </mat-expansion-panel-header>
 
             <div class="flex flex-row justify-between">
                 <div class="w-1/2">
-                    <p *ngFor="let persona of task.personas" class="text-red-300">
-                        {{persona.nombre}} ({{persona.edad}}) <br>
-                        <label *ngFor="let habilidad of persona.habilidades">{{habilidad}}, </label>
+                    <p *ngFor="let persona of task.persons; let i = index; trackBy: trackById" class="text-red-300">
+                        {{persona.name}} ({{persona.age}}) <br>
+                        <label *ngFor="let habilidad of persona.skills">{{habilidad}}, </label>
                     </p>
                 </div>
 
                 <div class="w-1/2">
                     <div class="flex flex-col justify-start text-right">
                         <p class="text-red-500">Fecha limite</p>
-                        <label class="text-red-500">{{task.fechaLimite}}</label>
+                        <label class="text-red-500">{{task.limitDate}}</label>
                     </div>
 
                     <!-- <div class="flex flex-col self-end text-right">
                         <label class="text-red-500">{{task.estado}}</label>
                     </div> -->
                 </div>
-
-
-
-
             </div>
-
-
         </mat-expansion-panel>
     </mat-accordion>
-
-
-
 </section>

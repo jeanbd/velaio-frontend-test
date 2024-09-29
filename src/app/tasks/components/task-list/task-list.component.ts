@@ -11,6 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { CreateTaskComponent } from '../create-task/create-task.component';
 
 
 @Component({
@@ -28,9 +30,16 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDialogModule
+
   ],
 })
 export class TaskListComponent implements OnInit {
+
+  constructor(
+    public dialog: MatDialog
+  ){}
+
   ngOnInit(): void {
     console.log('estos son los taks', tasks)
   }
@@ -41,9 +50,13 @@ export class TaskListComponent implements OnInit {
 
   @ViewChild(MatAccordion) accordion!: MatAccordion;
 
+  trackById(index: number): number {
+    return index; // Usa una clave única como 'id'
+  }
+
   pendingFilter() {
     this.dataTasks = tasks;
-    this.dataTasks = this.dataTasks.filter(e => e.estado == "Pendiente");
+    this.dataTasks = this.dataTasks.filter(e => e.status == "Pendiente");
     this.isCollapsedAll=false
     this.accordion.closeAll()
     this.pendingActivated = true;
@@ -53,7 +66,7 @@ export class TaskListComponent implements OnInit {
 
   completeFilter() {
     this.dataTasks = tasks;
-    this.dataTasks = this.dataTasks.filter(e => e.estado == "Completada");
+    this.dataTasks = this.dataTasks.filter(e => e.status == "Completada");
     this.isCollapsedAll=false
     this.accordion.closeAll()
     this.pendingActivated = false;
@@ -73,6 +86,10 @@ export class TaskListComponent implements OnInit {
   collapseAll() {
     this.isCollapsedAll = !this.isCollapsedAll
     this.isCollapsedAll == true ? this.accordion.openAll() : this.accordion.closeAll()
+  }
+
+  openCreaeTask(){
+    this.dialog.open(CreateTaskComponent);
   }
 
 }

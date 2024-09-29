@@ -1,27 +1,27 @@
 [
     {
       "id": 1,
-      "nombre": "Juan Pérez",
-      "edad": 30,
-      "habilidades": ["JavaScript", "Node.js", "Angular"]
+      "name": "Juan Pérez",
+      "age": 30,
+      "skills": ["JavaScript", "Node.js", "Angular"]
     },
     {
       "id": 2,
-      "nombre": "María López",
-      "edad": 25,
-      "habilidades": ["Python", "Django", "SQL"]
+      "name": "María López",
+      "age": 25,
+      "skills": ["Python", "Django", "SQL"]
     },
     {
       "id": 3,
-      "nombre": "Carlos Rodríguez",
-      "edad": 35,
-      "habilidades": ["Java", "Spring Boot", "Docker"]
+      "name": "Carlos Rodríguez",
+      "age": 35,
+      "skills": ["Java", "Spring Boot", "Docker"]
     },
     {
       "id": 4,
-      "nombre": "Ana González",
-      "edad": 28,
-      "habilidades": ["HTML", "CSS", "Tailwind CSS"]
+      "name": "Ana González",
+      "age": 28,
+      "skills": ["HTML", "CSS", "Tailwind CSS"]
     }
   ]
   

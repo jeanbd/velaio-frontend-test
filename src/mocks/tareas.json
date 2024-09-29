@@ -1,167 +1,167 @@
 [
     {
       "id": 1,
-      "detalle": "Implementar autenticación con Auth0 en aplicación Node.js",
-      "fechaLimite": "2024-10-10",
-      "personas": [
+      "detail": "Implementar autenticación con Auth0 en aplicación Node.js",
+      "limitDate": "2024-10-10",
+      "persons": [
         {
           "id": 1,
-          "nombre": "Juan Pérez",
-          "edad": 30,
-          "habilidades": ["JavaScript", "Node.js", "Angular"]
+          "name": "Juan Pérez",
+          "age": 30,
+          "skills": ["JavaScript", "Node.js", "Angular"]
         }
       ],
-      "estado":"Pendiente"
+      "status":"Pendiente"
     },
     {
       "id": 2,
-      "detalle": "Desarrollar API RESTful con Django",
-      "fechaLimite": "2024-09-30",
-      "personas": [
+      "detail": "Desarrollar API RESTful con Django",
+      "limitDate": "2024-09-30",
+      "persons": [
         {
           "id": 2,
-          "nombre": "María López",
-          "edad": 25,
-          "habilidades": ["Python", "Django", "SQL"]
+          "name": "María López",
+          "age": 25,
+          "skills": ["Python", "Django", "SQL"]
         }
       ],
-      "estado":"Pendiente"
+      "status":"Pendiente"
     },
     {
       "id": 3,
-      "detalle": "Configurar Docker en entorno de desarrollo para microservicios",
-      "fechaLimite": "2024-10-15",
-      "personas": [
+      "detail": "Configurar Docker en entorno de desarrollo para microservicios",
+      "limitDate": "2024-10-15",
+      "persons": [
         {
           "id": 3,
-          "nombre": "Carlos Rodríguez",
-          "edad": 35,
-          "habilidades": ["Java", "Spring Boot", "Docker"]
+          "name": "Carlos Rodríguez",
+          "age": 35,
+          "skills": ["Java", "Spring Boot", "Docker"]
         }
       ],
-      "estado":"Completada"
+      "status":"Completada"
     },
     {
       "id": 4,
-      "detalle": "Actualizar diseño de la interfaz usando Tailwind CSS",
-      "fechaLimite": "2024-09-25",
-      "personas": [
+      "detail": "Actualizar diseño de la interfaz usando Tailwind CSS",
+      "limitDate": "2024-09-25",
+      "persons": [
         {
           "id": 4,
-          "nombre": "Ana González",
-          "edad": 28,
-          "habilidades": ["HTML", "CSS", "Tailwind CSS"]
+          "name": "Ana González",
+          "age": 28,
+          "skills": ["HTML", "CSS", "Tailwind CSS"]
         }
       ],
-      "estado":"Completada"
+      "status":"Completada"
     },
     {
       "id": 5,
-      "detalle": "Desarrollar módulo de gestión de usuarios con Angular y NgRx",
-      "fechaLimite": "2024-10-05",
-      "personas": [
+      "detail": "Desarrollar módulo de gestión de usuarios con Angular y NgRx",
+      "limitDate": "2024-10-05",
+      "persons": [
         {
           "id": 1,
-          "nombre": "Juan Pérez",
-          "edad": 30,
-          "habilidades": ["JavaScript", "Node.js", "Angular"]
+          "name": "Juan Pérez",
+          "age": 30,
+          "skills": ["JavaScript", "Node.js", "Angular"]
         },
         {
           "id": 4,
-          "nombre": "Ana González",
-          "edad": 28,
-          "habilidades": ["HTML", "CSS", "Tailwind CSS"]
+          "name": "Ana González",
+          "age": 28,
+          "skills": ["HTML", "CSS", "Tailwind CSS"]
         }
       ],
-      "estado":"Pendiente"
+      "status":"Pendiente"
     },
     {
       "id": 6,
-      "detalle": "Optimizar base de datos con consultas avanzadas en SQL",
-      "fechaLimite": "2024-10-01",
-      "personas": [
+      "detail": "Optimizar base de datos con consultas avanzadas en SQL",
+      "limitDate": "2024-10-01",
+      "persons": [
         {
           "id": 2,
-          "nombre": "María López",
-          "edad": 25,
-          "habilidades": ["Python", "Django", "SQL"]
+          "name": "María López",
+          "age": 25,
+          "skills": ["Python", "Django", "SQL"]
         }
       ],
-      "estado":"Completada"
+      "status":"Completada"
     },
     {
       "id": 7,
-      "detalle": "Crear pruebas unitarias para la API en Spring Boot",
-      "fechaLimite": "2024-10-08",
-      "personas": [
+      "detail": "Crear pruebas unitarias para la API en Spring Boot",
+      "limitDate": "2024-10-08",
+      "persons": [
         {
           "id": 3,
-          "nombre": "Carlos Rodríguez",
-          "edad": 35,
-          "habilidades": ["Java", "Spring Boot", "Docker"]
+          "name": "Carlos Rodríguez",
+          "age": 35,
+          "skills": ["Java", "Spring Boot", "Docker"]
         }
       ],
-      "estado":"Pendiente"
+      "status":"Pendiente"
     },
     {
       "id": 8,
-      "detalle": "Integrar sistema de notificaciones en tiempo real con Socket.io",
-      "fechaLimite": "2024-09-29",
-      "personas": [
+      "detail": "Integrar sistema de notificaciones en tiempo real con Socket.io",
+      "limitDate": "2024-09-29",
+      "persons": [
         {
           "id": 1,
-          "nombre": "Juan Pérez",
-          "edad": 30,
-          "habilidades": ["JavaScript", "Node.js", "Angular"]
+          "name": "Juan Pérez",
+          "age": 30,
+          "skills": ["JavaScript", "Node.js", "Angular"]
         },
         {
           "id": 3,
-          "nombre": "Carlos Rodríguez",
-          "edad": 35,
-          "habilidades": ["Java", "Spring Boot", "Docker"]
+          "name": "Carlos Rodríguez",
+          "age": 35,
+          "skills": ["Java", "Spring Boot", "Docker"]
         }
       ],
-      "estado":"Pendiente"
+      "status":"Pendiente"
     },
     {
       "id": 9,
-      "detalle": "Migrar aplicación a arquitectura de microservicios",
-      "fechaLimite": "2024-10-12",
-      "personas": [
+      "detail": "Migrar aplicación a arquitectura de microservicios",
+      "limitDate": "2024-10-12",
+      "persons": [
         {
           "id": 3,
-          "nombre": "Carlos Rodríguez",
-          "edad": 35,
-          "habilidades": ["Java", "Spring Boot", "Docker"]
+          "name": "Carlos Rodríguez",
+          "age": 35,
+          "skills": ["Java", "Spring Boot", "Docker"]
         },
         {
           "id": 4,
-          "nombre": "Ana González",
-          "edad": 28,
-          "habilidades": ["HTML", "CSS", "Tailwind CSS"]
+          "name": "Ana González",
+          "age": 28,
+          "skills": ["HTML", "CSS", "Tailwind CSS"]
         }
       ],
-      "estado":"Pendiente"
+      "status":"Pendiente"
     },
     {
       "id": 10,
-      "detalle": "Refactorizar el código del frontend para mejorar el rendimiento",
-      "fechaLimite": "2024-09-27",
-      "personas": [
+      "detail": "Refactorizar el código del frontend para mejorar el rendimiento",
+      "limitDate": "2024-09-27",
+      "persons": [
         {
           "id": 1,
-          "nombre": "Juan Pérez",
-          "edad": 30,
-          "habilidades": ["JavaScript", "Node.js", "Angular"]
+          "name": "Juan Pérez",
+          "age": 30,
+          "skills": ["JavaScript", "Node.js", "Angular"]
         },
         {
           "id": 4,
-          "nombre": "Ana González",
-          "edad": 28,
-          "habilidades": ["HTML", "CSS", "Tailwind CSS"]
+          "name": "Ana González",
+          "age": 28,
+          "skills": ["HTML", "CSS", "Tailwind CSS"]
         }
       ],
-      "estado":"Completada"
+      "status":"Completada"
     }
   ]
   

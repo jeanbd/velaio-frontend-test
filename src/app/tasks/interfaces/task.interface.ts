@@ -1,14 +1,10 @@
+import { Persona } from "./person.interface";
+
 export interface Task{
     id?:number;
-    detalle:string;
-    fechaLimite:string;
-    personas:Persona[];
-    estado:string;
+    detail:string;
+    limitDate:string;
+    persons:Persona[];
+    status:string;
 }
 
-interface Persona{
-    nombre:string;
-    edad:number;
-    habilidades:string[]
-
-}
