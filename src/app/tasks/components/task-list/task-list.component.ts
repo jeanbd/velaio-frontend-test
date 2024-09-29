@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
 
 
@@ -38,7 +38,7 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog
-  ){}
+  ) { }
 
   ngOnInit(): void {
     console.log('estos son los taks', tasks)
@@ -57,30 +57,30 @@ export class TaskListComponent implements OnInit {
   pendingFilter() {
     this.dataTasks = tasks;
     this.dataTasks = this.dataTasks.filter(e => e.status == false);
-    this.isCollapsedAll=false
+    this.isCollapsedAll = false
     this.accordion.closeAll()
     this.pendingActivated = true;
     this.completeActivated = false;
-    
+
   }
 
   completeFilter() {
     this.dataTasks = tasks;
     this.dataTasks = this.dataTasks.filter(e => e.status == true);
-    this.isCollapsedAll=false
+    this.isCollapsedAll = false
     this.accordion.closeAll()
     this.pendingActivated = false;
     this.completeActivated = true;
-    
+
   }
 
   cleanFilter() {
     this.dataTasks = tasks;
-    this.isCollapsedAll=false
+    this.isCollapsedAll = false
     this.accordion.closeAll()
     this.pendingActivated = false;
     this.completeActivated = false
-    
+
   }
 
   collapseAll() {
@@ -88,15 +88,22 @@ export class TaskListComponent implements OnInit {
     this.isCollapsedAll == true ? this.accordion.openAll() : this.accordion.closeAll()
   }
 
-  openCreaeTask(){
-    this.dialog.open(CreateTaskComponent);
+  openCreaeTask() {
+    this.dialog.open(CreateTaskComponent,{
+      height: '400px',
+      width: '600px',
+    });
   }
 
-  openEditTask(task:Task){
-    this.dialog.open(CreateTaskComponent,{
-      data:{
-        isEditing:true,
-        task}
+  openEditTask(task: Task) {
+    this.dialog.open(CreateTaskComponent, {
+      height: '400px',
+      width: '600px',
+      data: {
+        isEditing: true,
+        task
+      },
+      
     });
   }
 

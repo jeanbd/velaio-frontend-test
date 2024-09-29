@@ -5,9 +5,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 
-import { ReactiveFormsModule, FormBuilder, FormArray, Validators, NgModel } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormArray, Validators, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 
 import tasks from '../../../../mocks/tareas.json';
 import { Task } from '../../interfaces/task.interface';
@@ -18,7 +19,14 @@ import { Task } from '../../interfaces/task.interface';
   styles: [
   ],
   standalone: true,
-  imports: [CommonModule, MatIconModule, ReactiveFormsModule, MatDialogModule, MatButtonModule,MatSlideToggleModule]
+  imports: [
+    CommonModule, 
+    MatIconModule, 
+    ReactiveFormsModule, 
+    MatDialogModule, 
+    MatButtonModule,
+    MatSlideToggleModule,
+    MatSnackBarModule]
 })
 export class CreateTaskComponent implements OnInit {
 
@@ -26,7 +34,8 @@ export class CreateTaskComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CreateTaskComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { isEditing: boolean, task: Task }
+    @Inject(MAT_DIALOG_DATA) public data: { isEditing: boolean, task: Task },
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -37,21 +46,22 @@ export class CreateTaskComponent implements OnInit {
   toggleStatus:boolean=false;
 
   taskForm = this.formBuilder.group({
-    detail: ['', [Validators.required, Validators.minLength(5)]],
-    limitDate: ['', [Validators.required]],
-    persons: this.formBuilder.array([]),
+    detail: ['', [Validators.required, this.skillValidator()]],
+    limitDate: ['', [Validators.required, this.skillValidator()]],
+    persons: this.formBuilder.array([],[this.uniquePersonNameValidator()]),
     status: [false]
 
   });
 
   addPerson() {
     const personForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(18)]],
+      name: ['', [Validators.required, Validators.minLength(5)]],
+      age: ['', [Validators.required, Validators.min(0), this.ageValidator]],
       skills: this.formBuilder.array([])
     });
     this.persons.push(personForm);
     this.addSkill(this.persons.length - 1);
+    this.persons.updateValueAndValidity();
   }
 
   removePerson(personIndex: number) {
@@ -64,7 +74,7 @@ export class CreateTaskComponent implements OnInit {
 
   addSkill(personIndex: number) {
     const skills = this.getSkills(personIndex);
-    skills.push(this.formBuilder.control('', Validators.required));
+    skills.push(this.formBuilder.control('', [Validators.required, this.skillValidator()]));
   }
 
   getSkills(personIndex: number) {
@@ -73,7 +83,16 @@ export class CreateTaskComponent implements OnInit {
 
   removeSkill(personIndex: number, skillIndex: number) {
     const skills = this.getSkills(personIndex);
-    skills.removeAt(skillIndex);
+    if (skills.length > 1) {
+      skills.removeAt(skillIndex);
+    } else {
+      this.snackBar.open('Una persona tiene que tener minimo una habilidad', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom'
+      });
+    }
+    
   }
 
   onSaveForm() {
@@ -120,7 +139,7 @@ export class CreateTaskComponent implements OnInit {
     // Add persons from the task
     this.data.task.persons.forEach(person => {
       const personForm = this.formBuilder.group({
-        name: [person.name, Validators.required],
+        name: [person.name, [Validators.required, Validators.minLength(5)]],
         age: [person.age, [Validators.required, Validators.min(0)]],
         skills: this.formBuilder.array([])
       });
@@ -128,7 +147,7 @@ export class CreateTaskComponent implements OnInit {
       // Add skills for each person
       const skillsArray = personForm.get('skills') as FormArray;
       person.skills.forEach(skill => {
-        skillsArray.push(this.formBuilder.control(skill, Validators.required));
+        skillsArray.push(this.formBuilder.control(skill, [Validators.required, this.skillValidator()]));
       });
 
       this.persons.push(personForm);
@@ -137,5 +156,43 @@ export class CreateTaskComponent implements OnInit {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  isValidField(field: keyof typeof this.taskForm.controls, index: number): boolean | null {
+    const formArray = this.taskForm.get('persons') as FormArray;
+    const control = formArray.at(index); // Acceder al FormControl en el índice
+  
+    return control.errors && control.touched;
+  }
+
+  // Custom validator to ensure age is older than 18
+  ageValidator(control: AbstractControl): ValidationErrors | null {
+    const age = control.value;
+    if (age && age < 18) {
+      return { 'underage': true };
+    }
+    return null;
+  }
+  
+  uniquePersonNameValidator(): ValidatorFn {
+    return (formArray: AbstractControl): ValidationErrors | null => {
+      const personNames = (formArray as FormArray).controls.map(
+        (person) => person.get('name')?.value.toLowerCase()
+      );
+      const hasDuplicates = personNames.some(
+        (name, index) => personNames.indexOf(name) !== index
+      );
+      return hasDuplicates ? { duplicateNames: true } : null;
+    };
+  }
+
+  skillValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (value === null || value === undefined || value.trim() === '') {
+        return { voidField: true };
+      }
+      return null;
+    };
   }
 }
