@@ -1,0 +1,91 @@
+<section class="flex flex-col h-full px-5 pt-3 gap-3 py-3">
+    
+
+    <div id="menu" class="sticky top-0 z-10 py-2">
+        <div class="flex flex-row justify-between bg-slate-200 rounded-xl p-2">
+            <div>
+                <!-- Boton para  nueva tarea -->
+                <button class=" w-28 bg-pink-600 rounded-xl mt-auto text-center text-white shadow-lg p-3 z-20" (click)="openCreaeTask()">
+                    <label class="cursor-pointer">
+                        Nueva tarea
+                    </label>
+                </button>
+            </div>
+            
+
+            <div class="flex flex-row">
+                <!-- Filtro para collapsar todo -->
+                <a class="rounded-xl p-1 cursor-pointer animate__animated animate__rollIn" 
+                [ngClass]="{'bg-green-200':isCollapsedAll==true,'bg-slate-300':isCollapsedAll==false}" 
+                (click)="collapseAll()">
+                    <mat-icon>unfold_more</mat-icon>
+                </a>
+            </div>
+    
+            <div class="flex flex-row gap-2">
+                <!-- Boton para quitar filtro -->
+                <a class="rounded-xl p-1 cursor-pointer animate__animated animate__rollIn"
+                    [ngClass]="{'bg-green-200':pendingActivated==false && completeActivated==false,
+                    'bg-slate-300':completeActivated==true || pendingActivated==true}"
+                    (click)="cleanFilter()">
+                    <mat-icon>filter_list_off</mat-icon>
+                </a>
+    
+                <!-- Boton para filtrar tareas completadas -->
+                <a class="rounded-xl p-1 cursor-pointer animate__animated animate__rollIn"
+                    [ngClass]="{'bg-green-200':completeActivated==true,'bg-slate-300':completeActivated==false}"
+                    (click)="completeFilter()">
+                    <mat-icon>check_circle</mat-icon>
+                </a>
+    
+                <!-- Boton para filtrar tareas pendientes -->
+                <a class="rounded-xl p-1 cursor-pointer animate__animated animate__rollIn"
+                    [ngClass]="{'bg-green-200':pendingActivated==true,'bg-slate-300':pendingActivated==false}"
+                    (click)="pendingFilter()">
+                    <mat-icon>pending</mat-icon>
+                </a>
+                </div>
+        </div>
+    </div>
+    
+
+    <!-- Lista de tareas -->
+    <mat-accordion class="animate__animated animate__fadeInLeftBig" multi>
+        <mat-expansion-panel *ngFor="let task of dataTasks">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{task.detail}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="flex flex-row justify-between">
+                <div class="w-1/2">
+                    <p *ngFor="let persona of task.persons; let i = index; trackBy: trackById" class="text-red-300">
+                        {{persona.name}} ({{persona.age}}) <br>
+                        <label *ngFor="let habilidad of persona.skills">{{habilidad}}, </label>
+                    </p>
+                </div>
+
+                <div class="w-1/2">
+                    <div class="flex flex-col justify-start text-right">
+                        <p class="text-red-500">Fecha limite</p>
+                        <label class="text-red-500">{{task.limitDate}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-row justify-between">
+                <div>
+                    <button mat-raised-button color="accent" (click)="openEditTask(task)">Editar</button>
+                </div>
+
+                <div class="mt-3">
+                    <!-- Botones de estado de la tarea -->
+                    <span *ngIf="task.status==true" class="bg-green-300 rounded-xl p-1">Completada</span>
+                    <span *ngIf="task.status==false" class="bg-red-500 rounded-xl p-1">Pendiente</span>
+                </div>
+                
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</section>

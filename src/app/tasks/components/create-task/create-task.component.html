@@ -1,0 +1,152 @@
+<section class="p-2">
+
+    <h1 mat-dialog-title>{{data!==null?'Editar':'Crear'}} nueva tarea</h1>
+    <hr>
+
+    <div mat-dialog-content class="flex flex-col">
+
+        <form autocomplete="off" [formGroup]="taskForm" (ngSubmit)="onSaveForm()">
+            <div>
+                <p for="detail" class="font-semibold">Detalle de la tarea</p>
+                <input class="w-full border border-slate-500 rounded-md pl-2" id="detail" type="text"
+                    formControlName="detail">
+                <span class="text-red-600 text-xs"
+                    *ngIf="taskForm.get('detail')?.errors && taskForm.get('detail')?.touched">
+                    Este campo no puede estar vacio
+                </span>
+            </div>
+
+            <div class="mt-4">
+                <p for="limit-date" class="font-semibold">Fecha limite</p>
+                <input class="w-full border border-slate-500 rounded-md pl-2" id="limit-date" type="date"
+                    formControlName="limitDate">
+            </div>
+
+            <!-- <hr> -->
+
+            <div class="flex flex-row items-center mt-4">
+                <label class="font-bold">Personas asociadas</label>
+                <button class="text-center" type="button" (click)="addPerson()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+
+                </button>
+            </div>
+
+
+            <div class="mb-6" formArrayName="persons">
+
+                <div *ngFor="let person of persons.controls; let personIndex = index" [formGroupName]="personIndex"
+                    class="mt-6">
+                    <div>
+                        <p for="name-person">Nombre completo</p>
+                        <input class="w-full border border-slate-500 rounded-md pl-2" type="text"
+                            formControlName="name">
+                    </div>
+                    <span *ngIf="persons.errors?.['duplicateNames']" class="text-red-600 text-xs">
+                        Nombres de personas no pueden repetirse en la misma tarea
+                    </span>
+                    <span class="text-red-600 text-xs"
+                        *ngIf="person.get('name')?.errors?.['required'] && person.get('name')?.touched">
+                        Nombre es requerido
+                    </span>
+
+                    <span class="text-red-600 text-xs"
+                        *ngIf="person.get('name')?.errors?.['minlength'] && person.get('name')?.touched">
+                        Nombre debe tener al menos 5 caracteres
+                    </span>
+
+                    <div class="my-4">
+                        <p for="name-person">Edad</p>
+                        <input class="w-full border border-slate-500 rounded-md pl-2" type="number"
+                            formControlName="age">
+                        <span class="text-red-600 text-xs"
+                            *ngIf="person.get('age')?.hasError('required') && person.get('age')?.touched">Edad es
+                            requerida</span>
+                        <span class="text-red-600 text-xs" *ngIf="person.get('age')?.hasError('min')">Edad debe ser un
+                            valor positivo</span>
+                        <span class="text-red-600 text-xs" *ngIf="person.get('age')?.hasError('underage')">La edad debe
+                            ser 18 como valor minimo</span>
+                    </div>
+
+                    <button mat-raised-button color="warn" type="button" (click)="removePerson(personIndex)">
+                        Eliminar persona
+                    </button>
+
+                    <hr>
+
+                    <div class="mt-4">
+
+                        <div class="flex flex-row">
+                            <label class="font-semibold">Habilidades</label>
+                            <button type="button" (click)="addSkill(personIndex)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                            </button>
+                        </div>
+
+
+
+                        <div formArrayName="skills">
+                            <div *ngFor="let skill of getSkills(personIndex).controls; let skillIndex = index"
+                                class="flex flex-col py-1">
+
+                                <div class="flex flex-row">
+                                    <input class="w-full border border-slate-500 rounded-xl pl-2"
+                                        placeholder="Añade una habilidad" type="text" [formControlName]="skillIndex">
+
+                                    <a class="text-center cursor-pointer" (click)="removeSkill(personIndex, skillIndex)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                        </svg>
+
+                                    </a>
+                                </div>
+
+
+                                <div class="flex flex-col">
+                                    <span class="text-red-600 text-xs"
+                                        *ngIf="getSkills(personIndex).at(skillIndex).errors?.['required'] && getSkills(personIndex).at(skillIndex).touched">
+                                        Habilidad es requerida
+                                    </span>
+                                    <span class="text-red-600 text-xs"
+                                        *ngIf="getSkills(personIndex).at(skillIndex).errors?.['voidField'] && getSkills(personIndex).at(skillIndex).touched">
+                                        Este campo no puede estar vacio
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+            <div class="flex flex-row justify-between">
+                <label for="">Estado</label>
+                <mat-slide-toggle formControlName="status">
+                    {{taskForm.controls.status.value==true?'Completada':'Pendiente'}}
+                </mat-slide-toggle>
+            </div>
+
+            <!-- Botones para crear o editar -->
+            <div class="mt-4">
+                <button *ngIf="data==null" mat-raised-button color="primary" [disabled]="taskForm.invalid">Crear</button>
+                <button *ngIf="data!=null" mat-raised-button color="primary" [disabled]="taskForm.invalid">Aceptar</button>
+            </div>
+
+        </form>
+
+
+    </div>
+</section>
