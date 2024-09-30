@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 import { ReactiveFormsModule, FormBuilder, FormArray, Validators, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
@@ -21,10 +21,10 @@ import { TasksService } from '../../services/tasks.service';
   ],
   standalone: true,
   imports: [
-    CommonModule, 
-    MatIconModule, 
-    ReactiveFormsModule, 
-    MatDialogModule, 
+    CommonModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatDialogModule,
     MatButtonModule,
     MatSlideToggleModule,
     MatSnackBarModule]
@@ -37,7 +37,7 @@ export class CreateTaskComponent implements OnInit {
     private dialogRef: MatDialogRef<CreateTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { isEditing: boolean, task: Task },
     private snackBar: MatSnackBar,
-    private taskService:TasksService
+    private taskService: TasksService
   ) { }
 
   ngOnInit(): void {
@@ -45,12 +45,12 @@ export class CreateTaskComponent implements OnInit {
     if (this.data && this.data.task != null) this.loadData();
   }
 
-  toggleStatus:boolean=false;
+  toggleStatus: boolean = false;
 
   taskForm = this.formBuilder.group({
     detail: ['', [Validators.required, this.voidFieldValidator()]],
     limitDate: ['', [Validators.required, this.voidFieldValidator()]],
-    persons: this.formBuilder.array([],[this.uniquePersonNameValidator()]),
+    persons: this.formBuilder.array([], [this.uniquePersonNameValidator()]),
     status: [false]
 
   });
@@ -94,20 +94,22 @@ export class CreateTaskComponent implements OnInit {
         verticalPosition: 'bottom'
       });
     }
-    
+
   }
 
-  
 
-  statusToggle(){
+
+  statusToggle() {
     // this.toggleStatus= !this.toggleStatus
-    console.log('toggle',this.taskForm.controls.status.value)
+    console.log('toggle', this.taskForm.controls.status.value)
   }
 
   loadData() {
-    // this.taskForm.controls.detail.setValue(tasks[0].detail)
-    // this.taskForm.controls.limitDate.setValue(tasks[0].limitDate)
-    // this.taskForm.controls.persons.setValue(tasks[0].persons)
+    // console.log('fecha que viene', this.data.task.limitDate)
+
+    // const formattedDate = this.formatDate(this.data.task.limitDate);
+
+    // console.log('esta es la fecha formateada', typeof formattedDate)
 
     this.taskForm.patchValue({
       detail: this.data.task.detail,
@@ -140,7 +142,7 @@ export class CreateTaskComponent implements OnInit {
   isValidField(field: keyof typeof this.taskForm.controls, index: number): boolean | null {
     const formArray = this.taskForm.get('persons') as FormArray;
     const control = formArray.at(index); // Acceder al FormControl en el índice
-  
+
     return control.errors && control.touched;
   }
 
@@ -152,7 +154,7 @@ export class CreateTaskComponent implements OnInit {
     }
     return null;
   }
-  
+
   uniquePersonNameValidator(): ValidatorFn {
     return (formArray: AbstractControl): ValidationErrors | null => {
       const personNames = (formArray as FormArray).controls.map(
@@ -175,39 +177,28 @@ export class CreateTaskComponent implements OnInit {
     };
   }
 
-  postTask(task:Task){
+  postTask(task: Task) {
     this.taskService.createTasks(task).subscribe(response => console.log('este es el response', response))
   }
 
-  patchTask(task:Task){
+  patchTask(task: Task) {
     this.taskService.updateTask(task).subscribe(response => console.log('este es el response', response))
   }
 
   onSaveForm() {
-    if (this.data) {
-      /*
-      const taskIndex = this.taskService.finalTaskList!.findIndex(task => task.id === this.data.task.id)
-      if (taskIndex !== -1) {
-        const taskEditedWithId: any = { id: this.data.task.id, ...this.taskForm.value }
-        console.log('este es el taskedited', taskEditedWithId)
+    if (this.data && this.data.task) {
 
-        this.taskService.finalTaskList![taskIndex] = taskEditedWithId
-      }
-      console.log('los tasks', this.taskService.finalTaskList)
-      this.closeDialog();
-      */
-     const editedTask = {id:this.data.task.id, ...this.taskForm.value} as Task
-     this.patchTask(editedTask);
-     this.closeDialog();
+      const editedTask = { id: this.data.task.id, ...this.taskForm.value } as Task
+      this.taskService.updateTask(editedTask).subscribe({
+        next: () => this.closeDialog(),
+        error: (err) => console.error('Error updating task:', err)
+      });
     } else {
       let newTask = this.taskForm.value as Task
-
-      // const newTaskWithId: any = { id: tasks.length + 1, ...newTask }
-      // console.log('este es el newtask', newTaskWithId)
-
-      // tasks.push(newTaskWithId);
-      this.postTask(newTask);
-      this.closeDialog();
+      this.taskService.createTasks(newTask).subscribe({
+        next: () => this.closeDialog(),
+        error: (err) => console.error('Error creating task:', err)
+      });
     }
   }
 }

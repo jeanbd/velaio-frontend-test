@@ -3,10 +3,9 @@
     {
       "id": "1",
       "detail": "Implementar autenticación con Auth0 en aplicación Node.js",
-      "limitDate": "10-10-2024",
+      "limitDate": "2024-09-02",
       "persons": [
         {
-          "id": 1,
           "name": "Juan Pérez",
           "age": 30,
           "skills": [
@@ -16,15 +15,14 @@
           ]
         }
       ],
-      "status": false
+      "status": true
     },
     {
       "id": "2",
       "detail": "Desarrollar API RESTful con Django",
-      "limitDate": "30-09-2024",
+      "limitDate": "2024-09-30",
       "persons": [
         {
-          "id": 2,
           "name": "María López",
           "age": 25,
           "skills": [
@@ -32,14 +30,21 @@
             "Django",
             "SQL"
           ]
+        },
+        {
+          "name": "Andres Lopez",
+          "age": 19,
+          "skills": [
+            "HHRR"
+          ]
         }
       ],
-      "status": false
+      "status": true
     },
     {
       "id": "3",
       "detail": "Configurar Docker en entorno de desarrollo para microservicios",
-      "limitDate": "15-10-2024",
+      "limitDate": "2024-10-15",
       "persons": [
         {
           "id": 3,
@@ -57,7 +62,7 @@
     {
       "id": "4",
       "detail": "Actualizar diseño de la interfaz usando Tailwind CSS",
-      "limitDate": "25-09-2024",
+      "limitDate": "2024-09-25",
       "persons": [
         {
           "id": 4,
@@ -75,7 +80,7 @@
     {
       "id": "5",
       "detail": "Desarrollar módulo de gestión de usuarios con Angular y NgRx",
-      "limitDate": "05-10-2024",
+      "limitDate": "2024-10-05",
       "persons": [
         {
           "id": 1,
@@ -103,7 +108,7 @@
     {
       "id": "6",
       "detail": "Optimizar base de datos con consultas avanzadas en SQL",
-      "limitDate": "01-10-2024",
+      "limitDate": "2024-10-01",
       "persons": [
         {
           "id": 2,
@@ -121,7 +126,7 @@
     {
       "id": "7",
       "detail": "Crear pruebas unitarias para la API en Spring Boot",
-      "limitDate": "08-10-2024",
+      "limitDate": "2024-10-08",
       "persons": [
         {
           "id": 3,
@@ -139,7 +144,7 @@
     {
       "id": "8",
       "detail": "Integrar sistema de notificaciones en tiempo real con Socket.io",
-      "limitDate": "29-09-2024",
+      "limitDate": "2024-09-29",
       "persons": [
         {
           "id": 1,
@@ -167,7 +172,7 @@
     {
       "id": "9",
       "detail": "Migrar aplicación a arquitectura de microservicios",
-      "limitDate": "12-10-2024",
+      "limitDate": "2024-10-12",
       "persons": [
         {
           "id": 3,
@@ -195,7 +200,7 @@
     {
       "id": "10",
       "detail": "Refactorizar el código del frontend para mejorar el rendimiento",
-      "limitDate": "27-09-2024",
+      "limitDate": "2024-09-27",
       "persons": [
         {
           "id": 1,
@@ -221,11 +226,11 @@
       "status": true
     },
     {
-      "id": "b168",
-      "detail": "probando",
-      "limitDate": "2024-09-03",
+      "id": "0152",
+      "detail": "Quiero terminar yaaaaaaa",
+      "limitDate": "2024-09-30",
       "persons": [],
-      "status": false
+      "status": true
     }
   ]
 }

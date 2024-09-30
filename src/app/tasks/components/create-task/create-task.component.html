@@ -43,7 +43,7 @@
                     class="mt-6">
                     <div>
                         <p for="name-person">Nombre completo</p>
-                        <input class="w-full border border-slate-500 rounded-md pl-2" id="limit-date" type="text"
+                        <input class="w-full border border-slate-500 rounded-md pl-2" type="text"
                             formControlName="name">
                     </div>
                     <span *ngIf="persons.errors?.['duplicateNames']" class="text-red-600 text-xs">
@@ -61,7 +61,7 @@
 
                     <div class="my-4">
                         <p for="name-person">Edad</p>
-                        <input class="w-full border border-slate-500 rounded-md pl-2" id="limit-date" type="number"
+                        <input class="w-full border border-slate-500 rounded-md pl-2" type="number"
                             formControlName="age">
                         <span class="text-red-600 text-xs"
                             *ngIf="person.get('age')?.hasError('required') && person.get('age')?.touched">Edad es

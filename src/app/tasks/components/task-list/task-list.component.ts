@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 // import tasks from '../../../../mocks/tareas.json';
 import { TasksService } from '../../services/tasks.service';
 import { Task } from '../../interfaces/task.interface';
@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
+import { Subscription } from 'rxjs';
 
 
 
@@ -36,15 +37,19 @@ import { CreateTaskComponent } from '../create-task/create-task.component';
 
   ],
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
     private taskService:TasksService
   ) { }
 
-  public tasksFromResponse?:Task[] = this.taskService.finalTaskList
-  public dataTasks?: Task[] = this.tasksFromResponse
+  // public tasksFromResponse?:Task[] = this.taskService.finalTaskList
+  // public dataTasks?: Task[] = this.tasksFromResponse
+
+  private tasksSubscription?: Subscription;
+  public tasksFromResponse: Task[] = [];
+  public dataTasks: Task[] = [];
 
   isCollapsedAll: boolean = false;
   completeActivated: boolean = false;
@@ -54,6 +59,15 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTasks();
+    this.tasksSubscription = this.taskService.tasks$.subscribe(tasks => {
+      this.tasksFromResponse = this.dataTasks = tasks;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.tasksSubscription) {
+      this.tasksSubscription.unsubscribe();
+    }
   }
  
   getTasks(){
