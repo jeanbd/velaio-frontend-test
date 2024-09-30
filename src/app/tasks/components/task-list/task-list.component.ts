@@ -59,7 +59,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getTasks();
-    this.tasksSubscription = this.taskService.tasks$.subscribe(tasks => {
+    this.tasksSubscription = this.taskService.tasksObservable.subscribe(tasks => {
       this.tasksFromResponse = this.dataTasks = tasks;
     });
   }

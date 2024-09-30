@@ -9,7 +9,7 @@ import { Task } from '../interfaces/task.interface';
 export class TasksService {
 
   private tasksSubject = new BehaviorSubject<Task[]>([]);
-  tasks$ = this.tasksSubject.asObservable();
+  tasksObservable = this.tasksSubject.asObservable();
 
   constructor(
     private httpClient: HttpClient
