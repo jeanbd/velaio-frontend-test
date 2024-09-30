@@ -31,6 +31,7 @@
     "@angular/cli": "~16.0.0",
     "@angular/compiler-cli": "^16.0.0",
     "@types/jasmine": "~4.3.0",
+    "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.20",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
