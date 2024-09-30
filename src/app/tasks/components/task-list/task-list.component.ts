@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import tasks from '../../../../mocks/tareas.json';
+// import tasks from '../../../../mocks/tareas.json';
+import { TasksService } from '../../services/tasks.service';
 import { Task } from '../../interfaces/task.interface';
 
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
@@ -13,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateTaskComponent } from '../create-task/create-task.component';
+
 
 
 @Component({
@@ -37,26 +39,39 @@ import { CreateTaskComponent } from '../create-task/create-task.component';
 export class TaskListComponent implements OnInit {
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private taskService:TasksService
   ) { }
 
-  ngOnInit(): void {
-    console.log('estos son los taks', tasks)
-  }
-  dataTasks: Task[] = tasks
+  public tasksFromResponse?:Task[] = this.taskService.finalTaskList
+  public dataTasks?: Task[] = this.tasksFromResponse
+
   isCollapsedAll: boolean = false;
   completeActivated: boolean = false;
   pendingActivated: boolean = false;
 
   @ViewChild(MatAccordion) accordion!: MatAccordion;
 
+  ngOnInit(): void {
+    this.getTasks();
+  }
+ 
+  getTasks(){
+    this.taskService.getTasks().subscribe( response => {
+      this.tasksFromResponse= this.dataTasks= response
+      // this.dataTasks=this.tasksFromResponse
+      console.log('este es el tasks',this.tasksFromResponse)
+    })
+  }
+  
+
   trackById(index: number): number {
     return index; // Usa una clave única como 'id'
   }
 
   pendingFilter() {
-    this.dataTasks = tasks;
-    this.dataTasks = this.dataTasks.filter(e => e.status == false);
+    this.dataTasks = this.tasksFromResponse;
+    this.dataTasks = this.dataTasks?.filter(e => e.status == false);
     this.isCollapsedAll = false
     this.accordion.closeAll()
     this.pendingActivated = true;
@@ -65,8 +80,8 @@ export class TaskListComponent implements OnInit {
   }
 
   completeFilter() {
-    this.dataTasks = tasks;
-    this.dataTasks = this.dataTasks.filter(e => e.status == true);
+    this.dataTasks = this.tasksFromResponse;
+    this.dataTasks = this.dataTasks?.filter(e => e.status == true);
     this.isCollapsedAll = false
     this.accordion.closeAll()
     this.pendingActivated = false;
@@ -75,7 +90,7 @@ export class TaskListComponent implements OnInit {
   }
 
   cleanFilter() {
-    this.dataTasks = tasks;
+    this.dataTasks = this.tasksFromResponse;
     this.isCollapsedAll = false
     this.accordion.closeAll()
     this.pendingActivated = false;
@@ -105,6 +120,11 @@ export class TaskListComponent implements OnInit {
       },
       
     });
+  }
+
+  get dataTask():Task[]{
+    const tasksList = this.dataTask
+    return tasksList
   }
 
 }

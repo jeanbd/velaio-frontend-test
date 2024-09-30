@@ -12,6 +12,7 @@ import { ReactiveFormsModule, FormBuilder, FormArray, Validators, ValidationErro
 
 import tasks from '../../../../mocks/tareas.json';
 import { Task } from '../../interfaces/task.interface';
+import { TasksService } from '../../services/tasks.service';
 
 @Component({
   selector: 'app-create-task',
@@ -35,7 +36,8 @@ export class CreateTaskComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CreateTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { isEditing: boolean, task: Task },
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private taskService:TasksService
   ) { }
 
   ngOnInit(): void {
@@ -46,8 +48,8 @@ export class CreateTaskComponent implements OnInit {
   toggleStatus:boolean=false;
 
   taskForm = this.formBuilder.group({
-    detail: ['', [Validators.required, this.skillValidator()]],
-    limitDate: ['', [Validators.required, this.skillValidator()]],
+    detail: ['', [Validators.required, this.voidFieldValidator()]],
+    limitDate: ['', [Validators.required, this.voidFieldValidator()]],
     persons: this.formBuilder.array([],[this.uniquePersonNameValidator()]),
     status: [false]
 
@@ -74,7 +76,7 @@ export class CreateTaskComponent implements OnInit {
 
   addSkill(personIndex: number) {
     const skills = this.getSkills(personIndex);
-    skills.push(this.formBuilder.control('', [Validators.required, this.skillValidator()]));
+    skills.push(this.formBuilder.control('', [Validators.required, this.voidFieldValidator()]));
   }
 
   getSkills(personIndex: number) {
@@ -95,30 +97,7 @@ export class CreateTaskComponent implements OnInit {
     
   }
 
-  onSaveForm() {
-    if (this.data) {
-
-      const taskIndex = tasks.findIndex(task => task.id === this.data.task.id)
-      if (taskIndex !== -1) {
-        const taskEditedWithId: any = { id: this.data.task.id, ...this.taskForm.value }
-        console.log('este es el taskedited', taskEditedWithId)
-
-        tasks[taskIndex] = taskEditedWithId
-      }
-      console.log('los tasks', tasks)
-      this.closeDialog();
-    } else {
-      let newTask = this.taskForm.value
-
-      const newTaskWithId: any = { id: tasks.length + 1, ...newTask }
-      console.log('este es el newtask', newTaskWithId)
-
-      tasks.push(newTaskWithId);
-      this.closeDialog();
-    }
-
-
-  }
+  
 
   statusToggle(){
     // this.toggleStatus= !this.toggleStatus
@@ -147,7 +126,7 @@ export class CreateTaskComponent implements OnInit {
       // Add skills for each person
       const skillsArray = personForm.get('skills') as FormArray;
       person.skills.forEach(skill => {
-        skillsArray.push(this.formBuilder.control(skill, [Validators.required, this.skillValidator()]));
+        skillsArray.push(this.formBuilder.control(skill, [Validators.required, this.voidFieldValidator()]));
       });
 
       this.persons.push(personForm);
@@ -186,7 +165,7 @@ export class CreateTaskComponent implements OnInit {
     };
   }
 
-  skillValidator(): ValidatorFn {
+  voidFieldValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
       if (value === null || value === undefined || value.trim() === '') {
@@ -194,5 +173,41 @@ export class CreateTaskComponent implements OnInit {
       }
       return null;
     };
+  }
+
+  postTask(task:Task){
+    this.taskService.createTasks(task).subscribe(response => console.log('este es el response', response))
+  }
+
+  patchTask(task:Task){
+    this.taskService.updateTask(task).subscribe(response => console.log('este es el response', response))
+  }
+
+  onSaveForm() {
+    if (this.data) {
+      /*
+      const taskIndex = this.taskService.finalTaskList!.findIndex(task => task.id === this.data.task.id)
+      if (taskIndex !== -1) {
+        const taskEditedWithId: any = { id: this.data.task.id, ...this.taskForm.value }
+        console.log('este es el taskedited', taskEditedWithId)
+
+        this.taskService.finalTaskList![taskIndex] = taskEditedWithId
+      }
+      console.log('los tasks', this.taskService.finalTaskList)
+      this.closeDialog();
+      */
+     const editedTask = {id:this.data.task.id, ...this.taskForm.value} as Task
+     this.patchTask(editedTask);
+     this.closeDialog();
+    } else {
+      let newTask = this.taskForm.value as Task
+
+      // const newTaskWithId: any = { id: tasks.length + 1, ...newTask }
+      // console.log('este es el newtask', newTaskWithId)
+
+      // tasks.push(newTaskWithId);
+      this.postTask(newTask);
+      this.closeDialog();
+    }
   }
 }

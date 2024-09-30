@@ -18,7 +18,7 @@
 
             <div class="mt-4">
                 <p for="limit-date" class="font-semibold">Fecha limite</p>
-                <input class="w-full border border-slate-500 rounded-md pl-2" id="limit-date" type="text"
+                <input class="w-full border border-slate-500 rounded-md pl-2" id="limit-date" type="date"
                     formControlName="limitDate">
             </div>
 
@@ -101,7 +101,7 @@
                                     <input class="w-full border border-slate-500 rounded-xl pl-2"
                                         placeholder="Añade una habilidad" type="text" [formControlName]="skillIndex">
 
-                                    <a class="text-center" (click)="removeSkill(personIndex, skillIndex)">
+                                    <a class="text-center cursor-pointer" (click)="removeSkill(personIndex, skillIndex)">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"
