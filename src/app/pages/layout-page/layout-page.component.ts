@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout-page',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
   ]
 })
 export class LayoutPageComponent {
+  constructor(
+    public router:Router
+  ){}
 
+  goToList(){
+    this.router.navigate(['/tasks'])
+  }
 }
