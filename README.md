@@ -1,3 +1,8 @@
+# Para ejecutar
+## npm install
+## "npm run back" para ejecutar servidor back local (json server), debe tener puerto 3000 habilitado
+## ng serve -o
+
 # VelaioTest
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
