@@ -133,20 +133,13 @@
             </div>
 
             <div class="flex flex-row justify-between">
-                <!-- <label for="pending-status">Pendiente</label>
-                <input id="pending-status" type="checkbox" formControlName="status">
-
-                <label for="complete-status">Completa</label>
-                <input id="complete-status" type="checkbox" formControlName="status"> -->
-
                 <label for="">Estado</label>
-                <mat-slide-toggle formControlName="status" (change)="statusToggle()">
+                <mat-slide-toggle formControlName="status">
                     {{taskForm.controls.status.value==true?'Completada':'Pendiente'}}
                 </mat-slide-toggle>
             </div>
 
-
-            <!-- <button mat-button color="primary" class="" >submit here</button> -->
+            <!-- Botones para crear o editar -->
             <div class="mt-4">
                 <button *ngIf="data==null" mat-raised-button color="primary" [disabled]="taskForm.invalid">Crear</button>
                 <button *ngIf="data!=null" mat-raised-button color="primary" [disabled]="taskForm.invalid">Aceptar</button>

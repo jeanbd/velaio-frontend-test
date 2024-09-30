@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-// import tasks from '../../../../mocks/tareas.json';
 import { TasksService } from '../../services/tasks.service';
 import { Task } from '../../interfaces/task.interface';
 
@@ -44,19 +43,25 @@ export class TaskListComponent implements OnInit, OnDestroy {
     private taskService:TasksService
   ) { }
 
-  // public tasksFromResponse?:Task[] = this.taskService.finalTaskList
-  // public dataTasks?: Task[] = this.tasksFromResponse
-
+  /**
+   * Variables para almacenar lista de tareas
+   */
   private tasksSubscription?: Subscription;
   public tasksFromResponse: Task[] = [];
   public dataTasks: Task[] = [];
 
+  /**
+   * Variables para filtros
+   */
   isCollapsedAll: boolean = false;
   completeActivated: boolean = false;
   pendingActivated: boolean = false;
 
   @ViewChild(MatAccordion) accordion!: MatAccordion;
 
+  /**
+   * Carga datos al renderizar
+   */
   ngOnInit(): void {
     this.getTasks();
     this.tasksSubscription = this.taskService.tasksObservable.subscribe(tasks => {
@@ -70,11 +75,12 @@ export class TaskListComponent implements OnInit, OnDestroy {
     }
   }
  
+  /**
+   * Llama al servicio del get de tareas
+   */
   getTasks(){
     this.taskService.getTasks().subscribe( response => {
       this.tasksFromResponse= this.dataTasks= response
-      // this.dataTasks=this.tasksFromResponse
-      console.log('este es el tasks',this.tasksFromResponse)
     })
   }
   
@@ -83,6 +89,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
     return index; // Usa una clave única como 'id'
   }
 
+  /**
+   * Activa filtro de tareas pendientes
+   */
   pendingFilter() {
     this.dataTasks = this.tasksFromResponse;
     this.dataTasks = this.dataTasks?.filter(e => e.status == false);
@@ -93,6 +102,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   }
 
+  /**
+   * Activa filtro de tareas completadas
+   */
   completeFilter() {
     this.dataTasks = this.tasksFromResponse;
     this.dataTasks = this.dataTasks?.filter(e => e.status == true);
@@ -103,6 +115,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   }
 
+  /**
+   * Limpia los filtros
+   */
   cleanFilter() {
     this.dataTasks = this.tasksFromResponse;
     this.isCollapsedAll = false
@@ -112,11 +127,17 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   }
 
+  /**
+   * Colapsa los acordeones
+   */
   collapseAll() {
     this.isCollapsedAll = !this.isCollapsedAll
     this.isCollapsedAll == true ? this.accordion.openAll() : this.accordion.closeAll()
   }
 
+  /**
+   * Abri el modal para crear tarea
+   */
   openCreaeTask() {
     this.dialog.open(CreateTaskComponent,{
       height: '400px',
@@ -124,6 +145,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Abre el modal para editar tarea
+   */
   openEditTask(task: Task) {
     this.dialog.open(CreateTaskComponent, {
       height: '400px',

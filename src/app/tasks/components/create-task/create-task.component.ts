@@ -10,7 +10,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ReactiveFormsModule, FormBuilder, FormArray, Validators, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import tasks from '../../../../mocks/tareas.json';
 import { Task } from '../../interfaces/task.interface';
 import { TasksService } from '../../services/tasks.service';
 
@@ -40,13 +39,18 @@ export class CreateTaskComponent implements OnInit {
     private taskService: TasksService
   ) { }
 
+  /**
+   * Revisa si es para crear o editar
+   */
   ngOnInit(): void {
-    console.log('existe el editing?', this.data)
     if (this.data && this.data.task != null) this.loadData();
   }
 
   toggleStatus: boolean = false;
 
+  /**
+   * Builder del formulario
+   */
   taskForm = this.formBuilder.group({
     detail: ['', [Validators.required, this.voidFieldValidator()]],
     limitDate: ['', [Validators.required, this.voidFieldValidator()]],
@@ -55,6 +59,9 @@ export class CreateTaskComponent implements OnInit {
 
   });
 
+  /**
+   * Agregar una persona al arreglo
+   */
   addPerson() {
     const personForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
@@ -66,6 +73,9 @@ export class CreateTaskComponent implements OnInit {
     this.persons.updateValueAndValidity();
   }
 
+  /**
+   * Eliminar la persona del arreglo
+   */
   removePerson(personIndex: number) {
     this.persons.removeAt(personIndex);
   }
@@ -74,6 +84,9 @@ export class CreateTaskComponent implements OnInit {
     return this.taskForm.get('persons') as FormArray;
   }
 
+  /**
+   * Agrega una habilidad al arreglo
+   */
   addSkill(personIndex: number) {
     const skills = this.getSkills(personIndex);
     skills.push(this.formBuilder.control('', [Validators.required, this.voidFieldValidator()]));
@@ -83,6 +96,9 @@ export class CreateTaskComponent implements OnInit {
     return this.persons.at(personIndex).get('skills') as FormArray;
   }
 
+  /**
+   * Elimina una habilidad
+   */
   removeSkill(personIndex: number, skillIndex: number) {
     const skills = this.getSkills(personIndex);
     if (skills.length > 1) {
@@ -98,18 +114,10 @@ export class CreateTaskComponent implements OnInit {
   }
 
 
-
-  statusToggle() {
-    // this.toggleStatus= !this.toggleStatus
-    console.log('toggle', this.taskForm.controls.status.value)
-  }
-
+  /**  
+   * Carga los datos si va a editar
+  */
   loadData() {
-    // console.log('fecha que viene', this.data.task.limitDate)
-
-    // const formattedDate = this.formatDate(this.data.task.limitDate);
-
-    // console.log('esta es la fecha formateada', typeof formattedDate)
 
     this.taskForm.patchValue({
       detail: this.data.task.detail,
@@ -117,15 +125,15 @@ export class CreateTaskComponent implements OnInit {
       status: this.data.task.status
     });
 
-    // Add persons from the task
+    // Agrega personas a la tarea
     this.data.task.persons.forEach(person => {
       const personForm = this.formBuilder.group({
         name: [person.name, [Validators.required, Validators.minLength(5)]],
-        age: [person.age, [Validators.required, Validators.min(0)]],
+        age: [person.age, [Validators.required, Validators.min(0), this.ageValidator]],
         skills: this.formBuilder.array([])
       });
 
-      // Add skills for each person
+      // Agrega las habilidades a la persona
       const skillsArray = personForm.get('skills') as FormArray;
       person.skills.forEach(skill => {
         skillsArray.push(this.formBuilder.control(skill, [Validators.required, this.voidFieldValidator()]));
@@ -135,18 +143,14 @@ export class CreateTaskComponent implements OnInit {
     })
   }
 
+  /**
+   * Cierra el modal
+   */
   closeDialog(): void {
     this.dialogRef.close();
   }
 
-  isValidField(field: keyof typeof this.taskForm.controls, index: number): boolean | null {
-    const formArray = this.taskForm.get('persons') as FormArray;
-    const control = formArray.at(index); // Acceder al FormControl en el índice
-
-    return control.errors && control.touched;
-  }
-
-  // Custom validator to ensure age is older than 18
+  // Custom validator de edad de la persona
   ageValidator(control: AbstractControl): ValidationErrors | null {
     const age = control.value;
     if (age && age < 18) {
@@ -155,6 +159,7 @@ export class CreateTaskComponent implements OnInit {
     return null;
   }
 
+  //Custom validator de nombre unico en la tarea
   uniquePersonNameValidator(): ValidatorFn {
     return (formArray: AbstractControl): ValidationErrors | null => {
       const personNames = (formArray as FormArray).controls.map(
@@ -167,6 +172,7 @@ export class CreateTaskComponent implements OnInit {
     };
   }
 
+  // Custom validator de campo vacion
   voidFieldValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
@@ -177,27 +183,36 @@ export class CreateTaskComponent implements OnInit {
     };
   }
 
+  /**
+   * Post de la tarea
+   */
   postTask(task: Task) {
-    this.taskService.createTasks(task).subscribe(response => console.log('este es el response', response))
+    this.taskService.createTasks(task).subscribe(response => {return})
   }
 
+  /**
+   * Edita la tarea
+   */
   patchTask(task: Task) {
-    this.taskService.updateTask(task).subscribe(response => console.log('este es el response', response))
+    this.taskService.updateTask(task).subscribe(response => {return})
   }
 
+  /**
+   * Accion del formulario
+   */
   onSaveForm() {
     if (this.data && this.data.task) {
 
       const editedTask = { id: this.data.task.id, ...this.taskForm.value } as Task
       this.taskService.updateTask(editedTask).subscribe({
         next: () => this.closeDialog(),
-        error: (err) => console.error('Error updating task:', err)
+        error: (err) => console.error('Error actualizando tarea:', err)
       });
     } else {
       let newTask = this.taskForm.value as Task
       this.taskService.createTasks(newTask).subscribe({
         next: () => this.closeDialog(),
-        error: (err) => console.error('Error creating task:', err)
+        error: (err) => console.error('Error actualizando tarea:', err)
       });
     }
   }

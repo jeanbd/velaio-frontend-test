@@ -65,13 +65,10 @@
       "limitDate": "2024-09-25",
       "persons": [
         {
-          "id": 4,
           "name": "Ana González",
           "age": 28,
           "skills": [
-            "HTML",
-            "CSS",
-            "Tailwind CSS"
+            "CSS"
           ]
         }
       ],
